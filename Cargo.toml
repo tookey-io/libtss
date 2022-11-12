@@ -2,27 +2,34 @@
 authors = ["Tookey <admin@tookey.io>"]
 edition = "2021"
 name = "tookey-libtss"
-version = "0.1.0"
+version = "1.0.2"
+license = "GPL-3.0"
+description = "Library with Threshold Signatures Scheme for NodeJS"
+homepage = "https://github.com/tookey-io/libtss"
+repository = "https://github.com/tookey-io/libtss"
+
 
 [profile.release]
 lto = true
 
 [lib]
-crate-type = ["cdylib"]
+crate-type = ["lib", "cdylib"]
 
 [features]
-default = ["bigint"]
+default = ["bigint", "napi"]
 bigint = ["curv-kzen/num-bigint"]
 gmp = ["curv-kzen/rust-gmp-kzen"]
+napi = ["dep:napi", "dep:napi-derive", "dep:napi-build"]
 
 [build-dependencies]
-napi-build = "2"
+napi-build = { version = "2", optional = true }
 
 [dependencies]
-# NodeJS
 anyhow = "1.0.65"
-napi = { version = "2.10", features = ["async", "serde-json"] }
-napi-derive = "2"
+
+# NodeJS
+napi = { version = "2.10", features = ["async", "serde-json"], optional = true }
+napi-derive = { version = "2", optional = true }
 
 # ECDSA
 subtle = { version = "2" }

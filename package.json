@@ -1,6 +1,6 @@
 {
   "name": "@tookey-io/libtss",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Threshold Signatures Library for https://tookey.io",
   "main": "index.js",
   "license": "GPL-3.0",
@@ -15,7 +15,9 @@
   ],
   "files": [
     "index.d.ts",
-    "index.js"
+    "index.js",
+    "examples/test-keygen.js",
+    "examples/test-sign.js"
   ],
   "napi": {
     "name": "libtss",

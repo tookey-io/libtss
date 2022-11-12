@@ -1,12 +1,10 @@
 pub mod ceremonies;
 pub mod ecdsa;
 pub mod join;
-pub mod keygen;
-pub mod sign;
 
-use napi_derive::napi;
+pub use curv;
+pub use ethereum_types;
+pub use round_based;
 
-#[napi]
-fn get_version() -> String {
-  env!("CARGO_PKG_VERSION").to_owned()
-}
+#[cfg(feature = "napi")]
+pub mod napi;

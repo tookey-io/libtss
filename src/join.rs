@@ -98,6 +98,6 @@ impl SmClient {
 }
 
 #[derive(Deserialize, Debug)]
-struct IssuedUniqueIdx {
+pub struct IssuedUniqueIdx {
   unique_idx: u16,
 }
