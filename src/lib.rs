@@ -8,5 +8,5 @@ use napi_derive::napi;
 
 #[napi]
 fn get_version() -> String {
-    option_env!("CARGO_PKG_VERSION").unwrap().to_owned()
+  env!("CARGO_PKG_VERSION").to_owned()
 }

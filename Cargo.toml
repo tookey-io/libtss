@@ -7,13 +7,11 @@ version = "0.1.0"
 [profile.release]
 lto = true
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [lib]
 crate-type = ["cdylib"]
 
 [features]
-default = ["gmp"]
+default = ["bigint"]
 bigint = ["curv-kzen/num-bigint"]
 gmp = ["curv-kzen/rust-gmp-kzen"]
 
@@ -23,7 +21,7 @@ napi-build = "2"
 [dependencies]
 # NodeJS
 anyhow = "1.0.65"
-napi = { version = "2.10", features = ["async", "anyhow", "serde-json"] }
+napi = { version = "2.10", features = ["async", "serde-json"] }
 napi-derive = "2"
 
 # ECDSA
@@ -39,7 +37,7 @@ derivative = "2"
 sha2 = "0.9"
 
 # Join
-surf = "2"
+reqwest = { version = "0.11", default-features = false, features = ["rustls-tls-native-roots", "stream"] }
 futures = "0.3"
 serde_json = "1.0"
 async-sse = "5"
