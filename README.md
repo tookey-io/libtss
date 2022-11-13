@@ -6,7 +6,7 @@ Helper library with realization for Threshold Signatures and common code for oth
 Add `tookey-libtss = { version = "1.0.3", default-features = false, features = ["gmp"] }` to Cargo.toml
 
 # NodeJs usage
-Run `yarn add `
+Run `yarn add @tookey-io/libtss`
 
 ## License
 
