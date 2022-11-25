@@ -1,5 +1,6 @@
 use napi_derive::napi;
 
+pub mod ethers;
 pub mod keygen;
 pub mod sign;
 

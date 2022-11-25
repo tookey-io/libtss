@@ -115,6 +115,7 @@ where
 
     let signature = signing.complete(&partial_signatures).context("online stage failed")?;
 
+    println!("Finished signature: {:?}", signature);
     Ok::<_, anyhow::Error>(signature)
   };
 
