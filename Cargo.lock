@@ -2408,7 +2408,7 @@ dependencies = [
 
 [[package]]
 name = "tookey-libtss"
-version = "1.0.3"
+version = "1.0.6"
 dependencies = [
  "anyhow",
  "async-sse",
