@@ -9,12 +9,14 @@ use curv::arithmetic::Converter;
 use curv::BigInt;
 use ethereum_types::H256;
 use futures::{SinkExt, StreamExt};
+use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
 use crate::ecdsa::state_machine::sign::{OfflineProtocolMessage, PartialSignature};
 use crate::join::join_computation;
 
 #[napi(object)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct SignParams {
   pub room_id: String,
   pub key: String,
@@ -25,6 +27,7 @@ pub struct SignParams {
 }
 
 #[napi(object)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct SignResult {
   pub result: Option<String>,
   pub error: Option<String>,

@@ -7,8 +7,10 @@ use anyhow::{anyhow, Context};
 use curv::elliptic::curves::Secp256k1;
 use futures::StreamExt;
 use round_based::AsyncProtocol;
+use serde::{Deserialize, Serialize};
 
 #[napi(object)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct KeygenParams {
   pub room_id: String,
   pub participant_index: u16,
@@ -19,6 +21,7 @@ pub struct KeygenParams {
 }
 
 #[napi(object)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct KeygenResult {
   pub key: Option<String>,
   pub error: Option<String>,

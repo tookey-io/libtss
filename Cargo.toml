@@ -2,7 +2,7 @@
 authors = ["Tookey <admin@tookey.io>"]
 edition = "2021"
 name = "tookey-libtss"
-version = "1.0.6"
+version = "1.1.0"
 license = "GPL-3.0"
 description = "Library with Threshold Signatures Scheme for NodeJS"
 homepage = "https://github.com/tookey-io/libtss"
@@ -17,19 +17,23 @@ crate-type = ["lib", "cdylib"]
 
 [features]
 default = ["bigint", "napi"]
+rust = ["napi-derive/noop"]
 bigint = ["curv-kzen/num-bigint"]
 gmp = ["curv-kzen/rust-gmp-kzen"]
-napi = ["dep:napi", "dep:napi-derive", "dep:napi-build"]
+napi = ["dep:napi", "dep:napi-build", "napi-derive/default"]
 
 [build-dependencies]
 napi-build = { version = "2", optional = true }
+
+[dev-dependencies]
+round-based = { version = "0.1.4", features = ["dev"] }
 
 [dependencies]
 anyhow = "1.0.65"
 
 # NodeJS
 napi = { version = "2.10", features = ["async", "serde-json"], optional = true }
-napi-derive = { version = "2", optional = true }
+napi-derive = { version = "2" }
 
 # ECDSA
 subtle = { version = "2" }
@@ -46,7 +50,7 @@ web3 = { version = "0.18", default-features = false }
 hex = "0.4"
 
 # Join
-reqwest = { version = "0.11", default-features = false, features = ["rustls-tls-native-roots", "stream"] }
+reqwest = { version = "0.11", default-features = false, features = ["rustls-tls", "stream"] }
 futures = "0.3"
 serde_json = "1.0"
 async-sse = "5"

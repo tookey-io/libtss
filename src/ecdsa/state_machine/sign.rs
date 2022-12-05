@@ -563,7 +563,7 @@ impl IsCritical for Error {
 ///
 /// ## Example
 /// ```no_run
-/// # use tss::ecdsa::{
+/// # use crate::ecdsa::{
 /// #     state_machine::sign::{CompletedOfflineStage, SignManual, PartialSignature},
 /// #     party_i::{LocalSignature, verify},
 /// # };
