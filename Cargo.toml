@@ -16,11 +16,12 @@ lto = true
 crate-type = ["lib", "cdylib"]
 
 [features]
-default = ["bigint", "napi"]
+default = ["bigint", "rust"]
 rust = ["napi-derive/noop"]
 bigint = ["curv-kzen/num-bigint"]
 gmp = ["curv-kzen/rust-gmp-kzen"]
 napi = ["dep:napi", "dep:napi-build", "napi-derive/default"]
+wasm = ["dep:getrandom", "dep:wasm-bindgen", "dep:wasm-bindgen-futures", "dep:serde-wasm-bindgen"]
 
 [build-dependencies]
 napi-build = { version = "2", optional = true }
@@ -34,6 +35,13 @@ anyhow = "1.0.65"
 # NodeJS
 napi = { version = "2.10", features = ["async", "serde-json"], optional = true }
 napi-derive = { version = "2" }
+
+# WASM
+getrandom = { version = "0.2", features = ["js"], optional = true }
+wasm-bindgen = { version = "0.2", optional = true }
+wasm-bindgen-futures = { version = "0.4", optional = true }
+serde-wasm-bindgen = { version = "0.4", optional = true }
+web-sys = { version = "0.3", features = ["EventSource", "MessageEvent"] }
 
 # ECDSA
 subtle = { version = "2" }

@@ -17,6 +17,7 @@ use crate::join::join_computation;
 
 #[napi(object)]
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
 pub struct SignParams {
   pub room_id: String,
   pub key: String,

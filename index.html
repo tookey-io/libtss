@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="utf-8" />
+  <title>hello-wasm example</title>
+</head>
+<body>
+<script type="module">
+      import init, { get_version, keygen } from "./pkg/tookey_libtss.js";
+      init().then(() => {
+        console.log("Result: ", get_version());
+
+        console.info('Started');
+
+        let params = {
+          room_id: "default-keygen",
+          participant_index: 1,
+          participants_count: 3,
+          participants_threshold: 1,
+          relay_address: "https://relay1.apps-production.tookey.cloud",
+          timeout_seconds: 120,
+        };
+
+        keygen(params).then((result) => {
+          if (typeof result.key === 'undefined') {
+            console.error('Got error: ', result.error);
+          } else {
+            console.info('Wrote key', result.key);
+          }
+        });
+      });
+    </script>
+</body>
+</html>

@@ -1,8 +1,12 @@
+use crate::console_log;
+use crate::wasm::log;
 use anyhow::{Context, Result};
-use futures::{Sink, Stream, StreamExt, TryStreamExt};
+use futures::{Sink, SinkExt, Stream, StreamExt, TryStreamExt};
 use round_based::Msg;
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use std::io::{Error, ErrorKind};
+use wasm_bindgen::closure::Closure;
+use wasm_bindgen::{JsCast, JsValue};
 
 pub async fn join_computation<M>(
   address: String,
@@ -76,10 +80,25 @@ impl SmClient {
   }
 
   pub async fn subscribe(&self) -> Result<impl Stream<Item = Result<String>>> {
-    let stream = reqwest::get(format!("{}/subscribe", self.base_url))
-      .await?
-      .bytes_stream();
-    let stream = stream.map_err(|e| Error::new(ErrorKind::Other, e)).into_async_read();
+    let (mut sender, receiver) = futures::channel::mpsc::unbounded::<Result<String>>();
+
+    let client = web_sys::EventSource::new(&format!("{}/subscribe", self.base_url))
+      .map_err(|e| anyhow::anyhow!("JsError: {:?}", e))
+      .unwrap();
+
+    let cb: Closure<dyn FnMut(JsValue)> = Closure::new(move |message: JsValue| {
+      console_log!("Received message: {:?}", message);
+      let message: web_sys::MessageEvent = message.into();
+
+      let _ = sender.send(message.data().as_string().context("SSE data is not string"));
+    });
+
+    client.set_onmessage(Some(&cb.as_ref().unchecked_ref()));
+
+    let stream = receiver
+      .into_stream()
+      .map_err(|e| Error::new(ErrorKind::Other, e))
+      .into_async_read();
     let events = async_sse::decode(stream);
 
     Ok(events.filter_map(|msg| async {

@@ -11,6 +11,7 @@ use serde::{Deserialize, Serialize};
 
 #[napi(object)]
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "snake_case")]
 pub struct KeygenParams {
   pub room_id: String,
   pub participant_index: u16,

@@ -52,7 +52,10 @@
     "format:rs": "cargo fmt",
     "prepublishOnly": "napi prepublish -t npm",
     "test": "ava",
-    "version": "napi version"
+    "version": "napi version",
+    "wasmBuild": "wasm-pack build --target web -- --features wasm",
+    "wasmBuildDev": "wasm-pack build --dev --target web -- --features wasm",
+    "wasmDev": "cargo watch -w src -s 'yarn run wasmBuildDev && npx http-server -p 3001 .'"
   },
   "devDependencies": {
     "@napi-rs/cli": "^2.11.4",
@@ -66,7 +69,8 @@
     "lint-staged": "^13.0.3",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.7.1",
-    "typescript": "^4.8.2"
+    "typescript": "^4.8.2",
+    "http-server": "14.1.1"
   },
   "lint-staged": {
     "*.@(js|ts|tsx)": [
