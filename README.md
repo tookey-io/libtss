@@ -1,12 +1,9 @@
-# `@tookey-io/libtss`
+# `tookey-libtss`
 
 Helper library with realization for Threshold Signatures and common code for other clients.
 
 # Rust usage
-Add `tookey-libtss = { version = "1.0.3", default-features = false, features = ["gmp"] }` to Cargo.toml
-
-# NodeJs usage
-Run `yarn add @tookey-io/libtss`
+Add `tookey-libtss = { version = "1.2.0", default-features = false, features = ["gmp"] }` to Cargo.toml
 
 ## License
 

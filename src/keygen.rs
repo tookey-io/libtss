@@ -1,4 +1,3 @@
-use napi_derive::napi;
 use std::time::Duration;
 
 use crate::ecdsa::state_machine::keygen::{Keygen, LocalKey};
@@ -6,6 +5,7 @@ use crate::join::join_computation;
 use anyhow::{anyhow, Context};
 use curv::elliptic::curves::Secp256k1;
 use futures::StreamExt;
+use napi_derive::napi;
 use round_based::AsyncProtocol;
 use serde::{Deserialize, Serialize};
 
@@ -27,7 +27,6 @@ pub struct KeygenResult {
   pub error: Option<String>,
 }
 
-#[napi]
 #[allow(dead_code)]
 pub async fn keygen(params: KeygenParams) -> KeygenResult {
   match internal_keygen(params).await {
