@@ -2,7 +2,7 @@
 authors = ["Tookey <admin@tookey.io>"]
 edition = "2021"
 name = "tookey-libtss"
-version = "1.2.0"
+version = "1.2.1"
 license = "GPL-3.0"
 description = "Library with Threshold Signatures Scheme"
 homepage = "https://github.com/tookey-io/libtss"
@@ -13,9 +13,10 @@ repository = "https://github.com/tookey-io/libtss"
 crate-type = ["lib"]
 
 [features]
-default = ["bigint", "napi-derive/noop"]
+default = ["bigint", "noop"]
 bigint = ["curv-kzen/num-bigint"]
 gmp = ["curv-kzen/rust-gmp-kzen"]
+noop = ["napi-derive/noop"]
 napi = ["dep:napi", "napi-derive/default"]
 
 [dev-dependencies]
