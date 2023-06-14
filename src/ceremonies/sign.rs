@@ -5,11 +5,9 @@ use crate::ecdsa::state_machine::sign::{
 };
 use anyhow::{anyhow, Context, Result};
 use curv::{elliptic::curves::Secp256k1, BigInt};
-use derive_more::TryInto;
 use futures::{channel::mpsc::channel, FutureExt, Sink, SinkExt, Stream, StreamExt, TryStreamExt};
 use round_based::{AsyncProtocol, Msg};
 
-#[derive(TryInto)]
 #[allow(clippy::large_enum_variant)]
 pub enum Messages {
   OfflineStage(Msg<OfflineProtocolMessage>),

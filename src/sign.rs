@@ -1,14 +1,11 @@
-use napi_derive::napi;
-
-use std::str::FromStr;
 use std::time::Duration;
 
 use crate::ceremonies;
 use anyhow::{anyhow, Context};
 use curv::arithmetic::Converter;
 use curv::BigInt;
-use ethereum_types::H256;
 use futures::{SinkExt, StreamExt};
+use napi_derive::napi;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
@@ -33,7 +30,6 @@ pub struct SignResult {
   pub error: Option<String>,
 }
 
-#[napi]
 #[allow(dead_code)]
 pub async fn sign(params: SignParams) -> SignResult {
   match internal_sign(params).await {
@@ -91,7 +87,7 @@ async fn internal_sign(params: SignParams) -> anyhow::Result<String> {
     Ok::<_, anyhow::Error>(outgoing)
   });
 
-  let hash = BigInt::from_bytes(H256::from_str(params.data.as_str()).context("hash read")?.as_bytes());
+  let hash = parse_hash(params.data)?;
 
   let signature_future = ceremonies::sign(
     outgoing_sender,
@@ -107,5 +103,16 @@ async fn internal_sign(params: SignParams) -> anyhow::Result<String> {
       Err(err) => Err(anyhow!("{:?}", err)),
     },
     Err(_) => Err(anyhow!("Timed out")),
+  }
+}
+
+fn parse_hash(str: String) -> anyhow::Result<BigInt> {
+  let str = str.strip_prefix("0x").unwrap_or(&str);
+  let bytes = hex::decode(str)?;
+
+  if bytes.len() == 32 {
+    Ok(BigInt::from_bytes(bytes.as_slice()))
+  } else {
+    Err(anyhow!("Hash has incorrect length: expected 32, got {}", bytes.len()))
   }
 }
