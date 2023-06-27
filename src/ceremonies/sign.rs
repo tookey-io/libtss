@@ -113,7 +113,12 @@ where
 
     let signature = signing.complete(&partial_signatures).context("online stage failed")?;
 
+    // TODO: find the way to wait for all messages to be sent
+    // Temporary add tokio delay
+    tokio::time::sleep(std::time::Duration::from_secs(1)).await;
+
     println!("Finished signature: {:?}", signature);
+
     Ok::<_, anyhow::Error>(signature)
   };
 
